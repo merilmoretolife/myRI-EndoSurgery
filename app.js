@@ -9,17 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (document.querySelector('iframe')) {
         checkAuthentication();
     }
-
-    const togglePasswordButton = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
-
-    if (togglePasswordButton) {
-        togglePasswordButton.addEventListener('click', function () {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.textContent = type === 'password' ? 'Show Password' : 'Hide Password';
-        });
-    }
 });
 
 function generateToken(length) {
@@ -36,8 +25,7 @@ function login() {
     var password = document.getElementById('password').value;
 
     if ((username === 'rahul.fidai' && password === 'Rahul@1969') || 
-        (username === 'umesh.sharma' && password === 'Meril@123') ||
-        (username === 'asma.shaikh' && password === 'Meril@123')) {
+        (username === 'umesh.sharma' && password === 'Meril@123')) {
         var token = generateToken(16);
         localStorage.setItem('authenticated', 'true');
         localStorage.setItem('authToken', token);
