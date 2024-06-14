@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>regAI - A regulatory Intelligence Bot</title>
+    <title>Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,85 +12,22 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
-            color: #fff;
         }
-        .login-container {
-            background-color: rgba(255, 255, 255, 0.8);
+        .chatbot-container {
+            background-color: #fff;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 300px;
-            animation: fadeIn 2s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .login-container h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        .login-container input[type="text"], .login-container input[type="password"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-        .login-container input[type="text"]:focus, .login-container input[type="password"]:focus {
-            transform: scale(1.05);
-            border-color: #007bff;
-        }
-        .login-container button {
             width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .login-container button:hover {
-            background-color: #0056b3;
-        }
-        .password-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .password-container input {
-            flex: 1;
-        }
-        .password-container button {
-            background: none;
-            border: none;
-            position: absolute;
-            right: 10px;
-            cursor: pointer;
+            height: 80%;
         }
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <img src="Meril Healthcare.png" alt="Meril Healthcare Logo" class="meril-logo">
-    <img src="regAI full logo.png" alt="regAI Logo" class="regai-logo">
-    <h2>Please Login to Continue</h2>
-    <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <div class="password-container">
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="button" id="togglePassword">
-                <img src="eye_icon.png" alt="Toggle Password Visibility">
-            </button>
-        </div>
-        <button type="submit">Login</button>
-    </form>
+<div class="chatbot-container">
+    <iframe id="chatbotIframe" src="https://www.chatbase.co/chatbot-iframe/li6Qk7muGhNmFHIamFsys" style="width: 100%; height: 100%; border: none;"></iframe>
 </div>
 
 <script src="app.js"></script>
