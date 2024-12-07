@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('endo-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            width: 600px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Admin Dashboard</h2>
+    <p>Total IDs: <span id="totalIds">0</span></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+</div>
+<script>
+    const users = JSON.parse(localStorage.getItem('users')) || {};
+    const userTable = document.getElementById('userTable');
+    const totalIds = document.getElementById('totalIds');
+
+    function renderUsers() {
+        userTable.innerHTML = '';
+        totalIds.textContent = Object.keys(users).length;
+
+        Object.keys(users).forEach(username => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${username}</td>
+                <td><button onclick="deleteUser('${username}')">Delete</button></td>
+            `;
+            userTable.appendChild(row);
+        });
+    }
+
+    function deleteUser(username) {
+        delete users[username];
+        localStorage.setItem('users', JSON.stringify(users));
+        renderUsers();
+    }
+
+    renderUsers();
+</script>
+</body>
+</html>
