@@ -34,7 +34,7 @@
             margin-bottom: 10px;
         }
         .chatbot-logo {
-            width: 100px;
+            width: 120px; /* Increased size for better visibility */
             margin-top: 10px;
         }
         form {
@@ -114,16 +114,16 @@
     <a href="reset-password.html" class="reset-password">Reset Password</a>
 </div>
 <script>
-    // Initialize users in localStorage if not already set
-    if (!localStorage.getItem('users')) {
-        const defaultUsers = {
+    // Initialize Endosurgery users in localStorage
+    if (!localStorage.getItem('endoUsers')) {
+        const endoUsers = {
             "rahul.fidai": "Rahul@1969",
             "umesh.sharma": "Meril@123",
             "asma.shaikh": "Meril@123",
             "jaydip.vansia": "Meril@123",
             "sathya.cv": "Meril@123"
         };
-        localStorage.setItem('users', JSON.stringify(defaultUsers));
+        localStorage.setItem('endoUsers', JSON.stringify(endoUsers));
     }
 
     document.getElementById('loginForm').addEventListener('submit', function (event) {
@@ -131,7 +131,7 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const users = JSON.parse(localStorage.getItem('users')) || {};
+        const users = JSON.parse(localStorage.getItem('endoUsers')) || {};
 
         if (users[username] && users[username] === password) {
             if (username === 'rahul.fidai') {
