@@ -16,12 +16,12 @@
             margin: 0;
         }
         .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
-            width: 320px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .logo-container {
             display: flex;
@@ -30,12 +30,67 @@
             margin-bottom: 20px;
         }
         .logo {
-            width: 150px;
+            width: 200px;
             margin-bottom: 10px;
         }
         .chatbot-logo {
             width: 100px;
             margin-top: 10px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .input-container {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .reset-password {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #87ceeb;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .reset-password:hover {
+            background-color: #66b2d9;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #888;
+        }
+        .toggle-password:hover {
+            color: #333;
         }
     </style>
 </head>
@@ -47,12 +102,16 @@
     </div>
     <h2>Login</h2>
     <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required>
+        <div class="input-container">
+            <input type="text" id="username" placeholder="Username" required>
+        </div>
         <div class="input-container">
             <input type="password" id="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
         </div>
         <button type="submit">Login</button>
     </form>
+    <a href="reset-password.html" class="reset-password">Reset Password</a>
 </div>
 <script>
     // Initialize users in localStorage if not already set
@@ -90,6 +149,12 @@
             alert('Incorrect username or password');
         }
     });
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+    }
 </script>
 </body>
 </html>
