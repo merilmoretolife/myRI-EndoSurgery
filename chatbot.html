@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chatbot</title>
+    <title>Endosurgery Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,6 +29,11 @@
     <iframe src="https://www.chatbase.co/chatbot-iframe/OHzQlcE2stl6MgQCuxzk_" style="width: 100%; height: 100%; border: none;"></iframe>
 </div>
 
-<script src="app.js"></script>
+<script>
+    const isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    if (!isAuthenticated) {
+        window.location.href = 'index.html';
+    }
+</script>
 </body>
 </html>
