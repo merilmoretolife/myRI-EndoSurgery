@@ -1,50 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>regAI - A regulatory Intelligence Bot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endosurgery Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('istockphoto-1190457038-1024x1024.jpg') no-repeat center center fixed;
+            background: url('endo-background.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
-            color: #fff;
         }
-        .login-container {
+        .container {
             background-color: #fff;
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 300px;
-            color: #333;
+            width: 320px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .login-container img {
-            width: 250px;
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-bottom: 20px;
         }
-        .meril-logo {
+        .logo {
             width: 150px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
-        .login-container h2 {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #666;
+        .input-container {
+            position: relative;
+            margin-bottom: 15px;
         }
-        .login-container input[type="text"], .login-container input[type="password"] {
-            width: calc(100% - 20px);
+        input {
+            width: calc(100% - 40px);
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
-        .login-container button {
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #888;
+        }
+        .toggle-password:hover {
+            color: #333;
+        }
+        button {
             width: 100%;
             padding: 10px;
             background-color: #007bff;
@@ -52,34 +64,85 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-bottom: 15px;
         }
-        .login-container button:hover {
+        button:hover {
             background-color: #0056b3;
         }
-        .footer {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
+        .reset-password {
+            display: block;
+            text-decoration: none;
+            background-color: #87ceeb;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
             font-size: 14px;
-            color: #00008b; /* Dark Blue */
+            text-align: center;
+            margin-top: 10px;
+        }
+        .reset-password:hover {
+            background-color: #66b2d9;
         }
     </style>
 </head>
 <body>
-
-<div class="login-container">
-    <img src="meril endo logo.jpg" alt="Meril Endo-Surgery Logo" class="meril-logo">
-    <img src="myRI.png" alt="myRI Logo">
-    <h2>Please Login to Continue</h2>
+<div class="container">
+    <div class="logo-container">
+        <img src="endo-logo.png" alt="Endosurgery Logo" class="logo">
+    </div>
+    <h2>Login</h2>
     <form id="loginForm">
         <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <div class="input-container">
+            <input type="password" id="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        </div>
         <button type="submit">Login</button>
     </form>
+    <a href="reset-password.html" class="reset-password">Reset Password</a>
 </div>
+<script>
+    // Initialize users in localStorage if not already set
+    if (!localStorage.getItem('users')) {
+        const defaultUsers = {
+            "rahul.fidai": "Rahul@1969",
+            "umesh.sharma": "Meril@123",
+            "asma.shaikh": "Meril@123",
+            "jaydip.vansia": "Meril@123",
+            "sathya.cv": "Meril@123"
+        };
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
 
-<div class="footer">Meril EndoSurgery Pvt. Ltd.</div>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-<script src="app.js"></script>
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        if (users[username] && users[username] === password) {
+            if (username === 'rahul.fidai') {
+                const choice = confirm("Do you want to go to the Admin Page? Click 'OK' for Admin Page, 'Cancel' for Chatbot.");
+                if (choice) {
+                    window.location.href = 'admin.html';
+                } else {
+                    window.location.href = 'chatbot.html';
+                }
+            } else {
+                alert('Login successful!');
+                window.location.href = 'chatbot.html';
+            }
+        } else {
+            alert('Incorrect username or password');
+        }
+    });
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('password');
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+    }
+</script>
 </body>
 </html>
