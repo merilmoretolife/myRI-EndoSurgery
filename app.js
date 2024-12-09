@@ -1,6 +1,6 @@
-const gistId = '82282d5058015323bff08fda4c4fb1f4';
+const gistId = '82282d5058015323bff08fda4c4fb1f4'; // Your Gist ID
 const gistUrl = `https://api.github.com/gists/${gistId}`;
-const token = 'your-github-personal-access-token'; // Replace with your GitHub token
+const token = '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'; // Replace with your token
 
 function login() {
     const username = document.getElementById('username').value;
