@@ -15,15 +15,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Initial users stored in localStorage
-const users = {
+const initialUsers = {
     'rahul.fidai': 'Rahul1969',
     'umesh.sharma': 'Meril@123',
     'asma.shaikh': 'Meril@123',
     'jaydip.vansia': 'Meril@123',
     'sathya.cv': 'Meril@123'
 };
+
 if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('users', JSON.stringify(initialUsers));
 }
 
 function login() {
@@ -34,7 +35,11 @@ function login() {
     if (users[username] && users[username] === password) {
         if (username === 'rahul.fidai') {
             const choice = confirm('Do you want to go to the Admin Page? Click OK for Admin, Cancel for Chatbot.');
-            window.location.href = choice ? 'admin.html' : 'chatbot.html';
+            if (choice) {
+                window.location.href = 'admin.html';
+            } else {
+                window.location.href = 'chatbot.html';
+            }
         } else {
             alert('Login successful!');
             window.location.href = 'chatbot.html';
