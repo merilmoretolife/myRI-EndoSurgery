@@ -1,4 +1,6 @@
-document.addEventListener('DOMContentLoaded', () => {
+// app.js
+
+document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('loginForm')) {
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault();
@@ -6,66 +8,48 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (document.getElementById('resetForm')) {
-        document.getElementById('resetForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            resetPassword();
-        });
+    if (document.querySelector('iframe')) {
+        checkAuthentication();
     }
 });
 
-// Initial users stored in localStorage
-const initialUsers = {
-    'rahul.fidai': 'Rahul1969',
-    'umesh.sharma': 'Meril@123',
-    'asma.shaikh': 'Meril@123',
-    'jaydip.vansia': 'Meril@123',
-    'sathya.cv': 'Meril@123'
-};
-
-if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify(initialUsers));
+function generateToken(length) {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var token = '';
+    for (var i = 0; i < length; i++) {
+        token += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return token;
 }
 
 function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const users = JSON.parse(localStorage.getItem('users'));
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
-    if (users[username] && users[username] === password) {
-        if (username === 'rahul.fidai') {
-            const choice = confirm('Do you want to go to the Admin Page? Click OK for Admin, Cancel for Chatbot.');
-            if (choice) {
-                window.location.href = 'admin.html';
-            } else {
-                window.location.href = 'chatbot.html';
-            }
-        } else {
-            alert('Login successful!');
-            window.location.href = 'chatbot.html';
-        }
+    if ((username === 'rahul.fidai' && password === 'Rahul@1969') || 
+        (username === 'umesh.sharma' && password === 'Meril@123') || 
+        (username === 'asma.shaikh' && password === 'Meril@123')) {
+        var token = generateToken(16);
+        localStorage.setItem('authenticated', 'true');
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('authTime', Date.now());
+        window.location.href = 'chatbot.html';
     } else {
         alert('Incorrect username or password');
     }
 }
 
-function resetPassword() {
-    const username = document.getElementById('username').value;
-    const newPassword = document.getElementById('newPassword').value;
-    const accessKey = document.getElementById('accessKey').value;
+function checkAuthentication() {
+    var isAuthenticated = localStorage.getItem('authenticated') === 'true';
+    var authToken = localStorage.getItem('authToken');
+    var authTime = parseInt(localStorage.getItem('authTime'), 10);
+    var currentTime = Date.now();
+    var sessionDuration = 30 * 60 * 1000; // 30 minutes
 
-    if (accessKey !== 'key4endo') {
-        alert('Invalid Access Key');
-        return;
-    }
-
-    const users = JSON.parse(localStorage.getItem('users'));
-    if (users[username]) {
-        users[username] = newPassword;
-        localStorage.setItem('users', JSON.stringify(users));
-        alert('Password reset successful!');
+    if (!isAuthenticated || !authToken || currentTime - authTime > sessionDuration) {
+        localStorage.removeItem('authenticated');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('authTime');
         window.location.href = 'index.html';
-    } else {
-        alert('Username not found');
     }
 }
