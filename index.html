@@ -34,7 +34,7 @@
             margin-bottom: 10px;
         }
         .chatbot-logo {
-            width: 120px; /* Increased size for better visibility */
+            width: 120px;
             margin-top: 10px;
         }
         form {
@@ -80,18 +80,6 @@
         .reset-password:hover {
             background-color: #66b2d9;
         }
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-            color: #888;
-        }
-        .toggle-password:hover {
-            color: #333;
-        }
     </style>
 </head>
 <body>
@@ -107,54 +95,11 @@
         </div>
         <div class="input-container">
             <input type="password" id="password" placeholder="Password" required>
-            <span class="toggle-password" onclick="togglePassword()">👁️</span>
         </div>
         <button type="submit">Login</button>
     </form>
     <a href="reset-password.html" class="reset-password">Reset Password</a>
 </div>
-<script>
-    // Initialize Endosurgery users in localStorage
-    if (!localStorage.getItem('endoUsers')) {
-        const endoUsers = {
-            "rahul.fidai": "Rahul@1969",
-            "umesh.sharma": "Meril@123",
-            "asma.shaikh": "Meril@123",
-            "jaydip.vansia": "Meril@123",
-            "sathya.cv": "Meril@123"
-        };
-        localStorage.setItem('endoUsers', JSON.stringify(endoUsers));
-    }
-
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        const users = JSON.parse(localStorage.getItem('endoUsers')) || {};
-
-        if (users[username] && users[username] === password) {
-            if (username === 'rahul.fidai') {
-                const choice = confirm("Do you want to go to the Admin Page? Click 'OK' for Admin Page, 'Cancel' for Chatbot.");
-                if (choice) {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'chatbot.html';
-                }
-            } else {
-                alert('Login successful!');
-                window.location.href = 'chatbot.html';
-            }
-        } else {
-            alert('Incorrect username or password');
-        }
-    });
-
-    function togglePassword() {
-        const passwordInput = document.getElementById('password');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-    }
-</script>
+<script src="app.js"></script>
 </body>
 </html>
