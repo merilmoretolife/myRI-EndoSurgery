@@ -1,42 +1,47 @@
-const gistId = '82282d5058015323bff08fda4c4fb1f4';
-const gistUrl = `https://api.github.com/gists/${gistId}`;
-const token = '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'; // Replace with your actual GitHub token
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('loginForm')) {
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            login();
+        });
+    }
 
-document.getElementById('loginForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevents reload
-    login();
+    if (document.getElementById('resetForm')) {
+        document.getElementById('resetForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            resetPassword();
+        });
+    }
 });
 
-document.getElementById('resetForm')?.addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevents reload
-    resetPassword();
-});
+// Initial users stored in localStorage
+const users = {
+    'rahul.fidai': 'Rahul1969',
+    'umesh.sharma': 'Meril@123',
+    'asma.shaikh': 'Meril@123',
+    'jaydip.vansia': 'Meril@123',
+    'sathya.cv': 'Meril@123'
+};
+if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify(users));
+}
 
 function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
+    const users = JSON.parse(localStorage.getItem('users'));
 
-    fetch(gistUrl, {
-        headers: {
-            'Authorization': `token ${token}`
+    if (users[username] && users[username] === password) {
+        if (username === 'rahul.fidai') {
+            const choice = confirm('Do you want to go to the Admin Page? Click OK for Admin, Cancel for Chatbot.');
+            window.location.href = choice ? 'admin.html' : 'chatbot.html';
+        } else {
+            alert('Login successful!');
+            window.location.href = 'chatbot.html';
         }
-    })
-        .then(response => {
-            if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-            return response.json();
-        })
-        .then(data => {
-            const users = JSON.parse(data.files['endo-users.json'].content);
-            if (users[username] && users[username] === password) {
-                window.location.href = username === 'rahul.fidai' ? 'admin.html' : 'chatbot.html';
-            } else {
-                alert('Incorrect username or password');
-            }
-        })
-        .catch(error => {
-            console.error('Error during login:', error);
-            alert('An error occurred. Please try again.');
-        });
+    } else {
+        alert('Incorrect username or password');
+    }
 }
 
 function resetPassword() {
@@ -49,46 +54,13 @@ function resetPassword() {
         return;
     }
 
-    fetch(gistUrl, {
-        headers: {
-            'Authorization': `token ${token}`
-        }
-    })
-        .then(response => response.json())
-        .then(data => {
-            const users = JSON.parse(data.files['endo-users.json'].content);
-            if (users[username]) {
-                users[username] = newPassword;
-                const updatedContent = JSON.stringify(users, null, 2);
-
-                return fetch(gistUrl, {
-                    method: 'PATCH',
-                    headers: {
-                        'Authorization': `token ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        files: {
-                            'endo-users.json': {
-                                content: updatedContent
-                            }
-                        }
-                    })
-                });
-            } else {
-                alert('Username not found');
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                alert('Password reset successful!');
-                window.location.href = 'index.html';
-            } else {
-                throw new Error(`HTTP Error: ${response.status}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error during password reset:', error);
-            alert('An error occurred. Please try again.');
-        });
+    const users = JSON.parse(localStorage.getItem('users'));
+    if (users[username]) {
+        users[username] = newPassword;
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Password reset successful!');
+        window.location.href = 'index.html';
+    } else {
+        alert('Username not found');
+    }
 }
