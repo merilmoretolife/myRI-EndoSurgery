@@ -37,9 +37,6 @@
             width: 120px;
             margin-top: 10px;
         }
-        form {
-            margin-top: 20px;
-        }
         .input-container {
             margin-bottom: 15px;
             position: relative;
@@ -61,24 +58,21 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         button:hover {
             background-color: #0056b3;
         }
-        .reset-password {
-            display: block;
-            text-decoration: none;
-            color: #fff;
-            background-color: #87ceeb;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 10px;
+        .toggle-password {
+            position: absolute;
+            top: 40%;
+            right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #888;
         }
-        .reset-password:hover {
-            background-color: #66b2d9;
+        .toggle-password:hover {
+            color: #333;
         }
     </style>
 </head>
@@ -95,10 +89,10 @@
         </div>
         <div class="input-container">
             <input type="password" id="password" placeholder="Password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility()">👁️</span>
         </div>
         <button type="submit">Login</button>
     </form>
-    <a href="reset-password.html" class="reset-password">Reset Password</a>
 </div>
 <script src="app.js"></script>
 </body>
