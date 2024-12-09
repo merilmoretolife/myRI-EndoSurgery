@@ -1,6 +1,6 @@
 const gistId = '82282d5058015323bff08fda4c4fb1f4';
 const gistUrl = `https://api.github.com/gists/${gistId}`;
-const token = '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'; // Replace with your actual GitHub token
+const token = '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'; // Replace with your actual GitHub token
 
 document.getElementById('loginForm').addEventListener('submit', function (event) {
     event.preventDefault(); // Prevents reload
