@@ -1,3 +1,4 @@
+console.log('app.js is loaded!');
 const gistId = '82282d5058015323bff08fda4c4fb1f4'; // Your Gist ID
 const gistUrl = `https://api.github.com/gists/${gistId}`;
 const token = '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'; // Replace with your token
