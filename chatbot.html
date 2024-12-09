@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Endosurgery Chatbot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,27 +15,19 @@
             margin: 0;
         }
         .chatbot-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
             width: 100%;
             height: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
-
 <div class="chatbot-container">
-    <iframe src="https://www.chatbase.co/chatbot-iframe/OHzQlcE2stl6MgQCuxzk_" style="width: 100%; height: 100%; border: none;"></iframe>
+    <iframe src="https://www.chatbase.co/chatbot-iframe/OHzQlcE2stl6MgQCuxzk_"></iframe>
 </div>
-
-<script>
-    const isAuthenticated = localStorage.getItem('authenticated') === 'true';
-    if (!isAuthenticated) {
-        window.location.href = 'index.html';
-    }
-</script>
 </body>
 </html>
