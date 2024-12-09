@@ -1,55 +1,87 @@
-// app.js
-
-document.addEventListener('DOMContentLoaded', function () {
-    if (document.getElementById('loginForm')) {
-        document.getElementById('loginForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            login();
-        });
-    }
-
-    if (document.querySelector('iframe')) {
-        checkAuthentication();
-    }
-});
-
-function generateToken(length) {
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var token = '';
-    for (var i = 0; i < length; i++) {
-        token += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return token;
-}
+const gistId = '82282d5058015323bff08fda4c4fb1f4';
+const gistUrl = `https://api.github.com/gists/${gistId}`;
+const token = 'your-github-personal-access-token'; // Replace with your GitHub token
 
 function login() {
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    if ((username === 'rahul.fidai' && password === 'Rahul@1969') || 
-        (username === 'umesh.sharma' && password === 'Meril@123') || 
-        (username === 'asma.shaikh' && password === 'Meril@123')) {
-        var token = generateToken(16);
-        localStorage.setItem('authenticated', 'true');
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('authTime', Date.now());
-        window.location.href = 'chatbot.html';
-    } else {
-        alert('Incorrect username or password');
-    }
+    fetch(gistUrl)
+        .then(response => response.json())
+        .then(data => {
+            const users = JSON.parse(data.files['endo-users.json'].content);
+            if (users[username] && users[username] === password) {
+                if (username === 'rahul.fidai') {
+                    const choice = confirm("Do you want to go to the Admin Page? Click 'OK' for Admin Page, 'Cancel' for Chatbot.");
+                    if (choice) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'chatbot.html';
+                    }
+                } else {
+                    alert('Login successful!');
+                    window.location.href = 'chatbot.html';
+                }
+            } else {
+                alert('Incorrect username or password');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+            alert('An error occurred. Please try again.');
+        });
 }
 
-function checkAuthentication() {
-    var isAuthenticated = localStorage.getItem('authenticated') === 'true';
-    var authToken = localStorage.getItem('authToken');
-    var authTime = parseInt(localStorage.getItem('authTime'), 10);
-    var currentTime = Date.now();
-    var sessionDuration = 30 * 60 * 1000; // 30 minutes
+function resetPassword() {
+    const username = document.getElementById('username').value;
+    const newPassword = document.getElementById('newPassword').value;
+    const accessKey = document.getElementById('accessKey').value;
 
-    if (!isAuthenticated || !authToken || currentTime - authTime > sessionDuration) {
-        localStorage.removeItem('authenticated');
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('authTime');
-        window.location.href = 'index.html';
+    if (accessKey !== "key4endo") {
+        alert('Invalid Access Key');
+        return;
     }
+
+    fetch(gistUrl)
+        .then(response => response.json())
+        .then(data => {
+            const users = JSON.parse(data.files['endo-users.json'].content);
+            if (users[username]) {
+                users[username] = newPassword;
+                const updatedContent = JSON.stringify(users, null, 2);
+
+                fetch(gistUrl, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        files: {
+                            'endo-users.json': {
+                                content: updatedContent
+                            }
+                        }
+                    })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Password reset successful!');
+                            window.location.href = 'index.html';
+                        } else {
+                            throw new Error('Failed to update password');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating password:', error);
+                        alert('An error occurred. Please try again.');
+                    });
+            } else {
+                alert('Username not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+            alert('An error occurred. Please try again.');
+        });
 }
