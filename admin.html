@@ -64,32 +64,6 @@
         <tbody id="userTable"></tbody>
     </table>
 </div>
-<script>
-    const users = JSON.parse(localStorage.getItem('endoUsers')) || {};
-    const userTable = document.getElementById('userTable');
-    const totalUsers = document.getElementById('totalUsers');
-
-    function renderUsers() {
-        userTable.innerHTML = '';
-        totalUsers.textContent = Object.keys(users).length;
-
-        Object.keys(users).forEach(username => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${username}</td>
-                <td><button onclick="deleteUser('${username}')">Delete</button></td>
-            `;
-            userTable.appendChild(row);
-        });
-    }
-
-    function deleteUser(username) {
-        delete users[username];
-        localStorage.setItem('endoUsers', JSON.stringify(users));
-        renderUsers();
-    }
-
-    renderUsers();
-</script>
+<script src="app.js"></script>
 </body>
 </html>
