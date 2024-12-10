@@ -12,6 +12,8 @@ const users = {
     'rahul.fidai': 'Rahul1969',
     'umesh.sharma': 'sharma.123',
     'asma.shaikh': 'shaikh.123',
+    'bittu.jha': 'jha.123',
+    'ra.endo': 'ra.123',
     'jaydip.vansia': 'vansia.123',
     'sathya.cv': 'sathya.123'
 };
